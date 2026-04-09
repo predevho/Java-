@@ -42,15 +42,18 @@ public class App {
         System.out.print("작가 : ");
         String Author = scanner.nextLine().trim();
 
-        int id = ++lastId;
-
-        WiseSaying wiseSaying = new WiseSaying(id, Content, Author);
-
+        WiseSaying wiseSaying = new WiseSaying(++lastId, Author, Content);
 
         wiseSayings.add(wiseSaying);
 
-        System.out.printf("%d번 명언이 등록되었습니다.", (id));
+        System.out.printf("%d번 명언이 등록되었습니다.".formatted (wiseSaying.getId()));
 
+    }
+
+    WiseSaying write(String content, String author) {
+        WiseSaying wiseSaying = new WiseSaying(++lastId, author, content);
+        wiseSayings.add(wiseSaying);
+        return wiseSaying;
     }
 
     void actionList() {
@@ -73,9 +76,25 @@ public class App {
     void actionDelete(String cmd) {
         String[] cmdBits = cmd.split("=");
         if (cmdBits.length < 2 || cmdBits[1].isEmpty()) {
-
         }
         int id = Integer.parseInt(cmdBits[1]);
+
+        delete(id);
+
         System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
+    }
+
+    void delete(int id) {
+        WiseSaying wiseSaying = null;
+        for (int i = 0; i < wiseSayings.size(); i++) {
+            if (wiseSayings.get(i).getId() == id) {
+                wiseSaying = wiseSayings.get(i);
+            }
+        }
+        if(wiseSaying == null) {
+            System.out.println("해당 아이디는 존재하지 않습니다.");
+        }
+
+        wiseSayings.remove(wiseSaying);
     }
 }
