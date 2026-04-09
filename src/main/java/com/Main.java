@@ -7,7 +7,7 @@ public class Main {
     static void main() {
         System.out.println("== 명언 앱 ==");
         Scanner scanner = new Scanner(System.in);
-
+        //while문안에 넣으면 끝날때 초기화가 되므로 밖에다가 선언
         int lastId = 0;
 
         while (true) {
@@ -25,9 +25,19 @@ public class Main {
                 System.out.print("작가 : ");
                 String wiseSayingAuthor = scanner.nextLine().trim();
 
-                int number = ++lastId;
+                int id = ++lastId;
 
-                System.out.printf("%d번 명언이 등록되었습니다.",(number));
+                WiseSaying wiseSaying = new WiseSaying();
+
+                wiseSaying.id = id;
+                wiseSaying.content = wiseSayingContent;
+                wiseSaying.author = wiseSayingAuthor;
+
+                System.out.println("wiseSaying.id = " + wiseSaying.id);
+                System.out.println("wiseSaying.content = " + wiseSaying.content);
+                System.out.println("wiseSaying.author = " + wiseSaying.author);
+
+                System.out.printf("%d번 명언이 등록되었습니다.",(id));
             }
         }
 
