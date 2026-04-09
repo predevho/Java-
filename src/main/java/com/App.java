@@ -26,12 +26,15 @@ public class App {
                 actionWrite();
             } else if (cmd.equals("목록")) {
                 actionList();
+            } else if (cmd.startsWith("삭제")){
+                actionDelete();
             }
         }
 
         scanner.close();
     }
-    void actionWrite(){
+
+    void actionWrite() {
         System.out.print("명언 : ");
         String Content = scanner.nextLine().trim();
         //메서드 체이닝
@@ -49,7 +52,8 @@ public class App {
         System.out.printf("%d번 명언이 등록되었습니다.", (id));
 
     }
-    void actionList(){
+
+    void actionList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         //for문을 이용해서 wiseSayings 리스트에 있는 요소들을 역순으로 출력
@@ -65,5 +69,7 @@ public class App {
         }
 
     }
-
+    void actionDelete(){
+            System.out.println("삭제처리");
+        }
 }
