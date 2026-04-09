@@ -1,5 +1,7 @@
 package com;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //scanner 객체를 이용해서 터미널 입력 받기
@@ -9,6 +11,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         //while문안에 넣으면 끝날때 초기화가 되므로 밖에다가 선언
         int lastId = 0;
+
+        List<WiseSaying> wiseSayings = new ArrayList<>();
 
         while (true) {
             System.out.print("명령) ");
@@ -33,11 +37,21 @@ public class Main {
                 wiseSaying.content = wiseSayingContent;
                 wiseSaying.author = wiseSayingAuthor;
 
-                System.out.println("wiseSaying.id = " + wiseSaying.id);
-                System.out.println("wiseSaying.content = " + wiseSaying.content);
-                System.out.println("wiseSaying.author = " + wiseSaying.author);
+                wiseSayings.add(wiseSaying);
 
                 System.out.printf("%d번 명언이 등록되었습니다.",(id));
+            }else if(cmd.equals("목록")){
+                System.out.println("번호 / 작가 / 명언");
+                System.out.println("----------------------");
+                for(int i = 0; i < wiseSayings.size(); i++) {
+                    WiseSaying wiseSaying = wiseSayings.get(i);{
+                        if(wiseSaying == null) {
+                            continue;
+                        }
+                        System.out.println("%d / %s / %s".formatted(wiseSaying.id,wiseSaying.content,wiseSaying.author));
+                    }
+                }
+
             }
         }
 
