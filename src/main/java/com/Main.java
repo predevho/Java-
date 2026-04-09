@@ -43,7 +43,9 @@ public class Main {
             }else if(cmd.equals("목록")){
                 System.out.println("번호 / 작가 / 명언");
                 System.out.println("----------------------");
-                for(int i = 0; i < wiseSayings.size(); i++) {
+                //for문을 이용해서 wiseSayings 리스트에 있는 요소들을 역순으로 출력
+                //-1은 인덱스의 크기보다 -1만큼 작기때문에
+                for(int i = wiseSayings.size() - 1; i >= 0; i--) {
                     WiseSaying wiseSaying = wiseSayings.get(i);{
                         if(wiseSaying == null) {
                             continue;
