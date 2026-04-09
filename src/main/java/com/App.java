@@ -63,15 +63,7 @@ public class App {
     }
 
     void actionDelete(String cmd) {
-        String[] cmdBits = cmd.split("=");
-
-        if (cmdBits.length < 2 ||  cmdBits[1].isEmpty()) {
-            System.out.println("id를 입력해주세요.");
-            return;
-        }
-
-        int id = Integer.parseInt(cmdBits[1]);
-
+        int id = CmdSpiltId(cmd);
         WiseSaying wiseSaying = findById(id);
 
         delete(wiseSaying);
@@ -84,14 +76,7 @@ public class App {
     }
 
     void actionModify(String cmd) {
-        String[] cmdBits = cmd.split("=");
-
-        if (cmdBits.length < 2 ||  cmdBits[1].isEmpty()) {
-            System.out.println("id를 입력해주세요.");
-            return;
-        }
-
-        int id = Integer.parseInt(cmdBits[1]);
+        int id = CmdSpiltId(cmd);
 
         WiseSaying wiseSaying = findById(id);
 
@@ -127,5 +112,16 @@ public class App {
         }
 
         return wiseSaying;
+    }
+
+    int CmdSpiltId(String cmd) {
+        String[] cmdBits = cmd.split("=");
+
+        if (cmdBits.length < 2 ||  cmdBits[1].isEmpty()) {
+            System.out.println("id를 입력해주세요.");
+            return -1;
+        }
+
+        return Integer.parseInt(cmdBits[1]);
     }
 }
