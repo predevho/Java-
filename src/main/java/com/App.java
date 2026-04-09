@@ -33,19 +33,16 @@ public class App {
     }
     void actionWrite(){
         System.out.print("명언 : ");
-        String wiseSayingContent = scanner.nextLine().trim();
+        String Content = scanner.nextLine().trim();
         //메서드 체이닝
 
         System.out.print("작가 : ");
-        String wiseSayingAuthor = scanner.nextLine().trim();
+        String Author = scanner.nextLine().trim();
 
         int id = ++lastId;
 
-        WiseSaying wiseSaying = new WiseSaying();
+        WiseSaying wiseSaying = new WiseSaying(id, Content, Author);
 
-        wiseSaying.id = id;
-        wiseSaying.content = wiseSayingContent;
-        wiseSaying.author = wiseSayingAuthor;
 
         wiseSayings.add(wiseSaying);
 
@@ -63,7 +60,7 @@ public class App {
                 if (wiseSaying == null) {
                     continue;
                 }
-                System.out.println("%d / %s / %s".formatted(wiseSaying.id, wiseSaying.content, wiseSaying.author));
+                System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()));
             }
         }
 
