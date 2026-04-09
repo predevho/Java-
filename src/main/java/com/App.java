@@ -28,9 +28,10 @@ public class App {
                 actionList();
             } else if (cmd.startsWith("삭제")) {
                 actionDelete(cmd);
+            } else if (cmd.startsWith("수정")) {
+                actionModify(cmd);
             }
         }
-
         scanner.close();
     }
 
@@ -42,17 +43,17 @@ public class App {
         System.out.print("작가 : ");
         String Author = scanner.nextLine().trim();
 
-        WiseSaying wiseSaying = new WiseSaying(++lastId, Author, Content);
+        WiseSaying wiseSaying = write(Author, Content);
 
-        wiseSayings.add(wiseSaying);
-
-        System.out.printf("%d번 명언이 등록되었습니다.".formatted (wiseSaying.getId()));
+        System.out.printf("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
 
     }
 
-    WiseSaying write(String content, String author) {
+    WiseSaying write(String author, String content) {
         WiseSaying wiseSaying = new WiseSaying(++lastId, author, content);
+
         wiseSayings.add(wiseSaying);
+
         return wiseSaying;
     }
 
@@ -64,9 +65,6 @@ public class App {
         for (int i = wiseSayings.size() - 1; i >= 0; i--) {
             WiseSaying wiseSaying = wiseSayings.get(i);
             {
-                if (wiseSaying == null) {
-                    continue;
-                }
                 System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()));
             }
         }
@@ -75,7 +73,10 @@ public class App {
 
     void actionDelete(String cmd) {
         String[] cmdBits = cmd.split("=");
+
         if (cmdBits.length < 2 || cmdBits[1].isEmpty()) {
+            System.out.println(" id를 입력해주세요");
+            return;
         }
         int id = Integer.parseInt(cmdBits[1]);
 
@@ -91,10 +92,47 @@ public class App {
                 wiseSaying = wiseSayings.get(i);
             }
         }
-        if(wiseSaying == null) {
+        if (wiseSaying == null) {
             System.out.println("해당 아이디는 존재하지 않습니다.");
+            return;
         }
 
         wiseSayings.remove(wiseSaying);
+    }
+
+    void actionModify(String cmd) {
+        String[] cmdBits = cmd.split("=");
+
+        if (cmdBits.length < 2 || cmdBits[1].isEmpty()) {
+            System.out.println(" id를 입력해주세요");
+            return;
+        }
+        int id = Integer.parseInt(cmdBits[1]);
+
+        modify(id);
+
+        System.out.println("%d번 명언이 수정되었습니다.".formatted(id));
+    }
+
+    void modify(int id){
+        WiseSaying wiseSaying = null;
+        for(int i = 0; i < wiseSayings.size(); i++) {
+            if (wiseSayings.get(i).getId() == id) {
+                wiseSaying = wiseSayings.get(i);
+            }
+        }
+        if (wiseSaying == null) {
+            System.out.println("%d번 아이디는 존재하지 않습니다.".formatted(id));
+        }
+
+        System.out.println("명언(기존): %s".formatted(wiseSaying.getContent()));
+        System.out.print("명언: ");
+        String content = scanner.nextLine().trim();
+        wiseSaying.setContent(content);
+
+        System.out.println("작가(기존): %s".formatted(wiseSaying.getAuthor()));
+        System.out.print("작가: ");
+        String author = scanner.nextLine().trim();
+        wiseSaying.setAuthor(author);
     }
 }
