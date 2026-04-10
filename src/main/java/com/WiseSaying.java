@@ -2,7 +2,7 @@ package com;
 
 public class WiseSaying {
     //필드값들은 웬만하면 private로 접근을 제한하는게 일반적이다.
-    private int id;
+    private final int id;
     private String content;
     private String author;
 
@@ -18,7 +18,8 @@ public class WiseSaying {
     }
 
     public void setId(int id) {
-        this.id = id;
+        //id는 final로 선언되어 있기 때문에 setter가 필요없다.
+        //setter는 보통 final이 아닌 필드에 대해서 만들어준다.
     }
 
     public String getContent() {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Rq {
-    private String actionName;
-    private Map<String, String> paramsMap;
+    private final String actionName;
+    private final Map<String, String> paramsMap;
 
 
     Rq(String cmd) {
@@ -36,23 +36,19 @@ public class Rq {
     }
 
     public String getParam(String paramName, String defaultValue) {
-        if (paramsMap.containsKey(paramName)) {
-            return paramsMap.get(paramName);
-        } else {
-            return defaultValue;
-        }
+        return paramsMap.getOrDefault(paramName, defaultValue);
     }
 
 
     public int getParamAsInt(String paramName, int defaultValue) {
         String value = getParam(paramName, "");
 
-        if(value.isEmpty()) {
+        if (value.isEmpty()) {
             return defaultValue;
         }
-        try{
+        try {
             return Integer.parseInt(value);
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return defaultValue;
         }
     }
