@@ -3,6 +3,7 @@ package com;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
@@ -53,13 +54,22 @@ public class App {
     }
 
     void actionList() {
+//        System.out.println("번호 / 작가 / 명언");
+//        System.out.println("----------------------");
+//
+//        for (int i = wiseSayingList.size() - 1; i >=0; i--) {
+//            WiseSaying wiseSaying = wiseSayingList.get(i);
+//            System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()));
+//        }
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        for (int i = wiseSayingList.size() - 1; i >=0; i--) {
-            WiseSaying wiseSaying = wiseSayingList.get(i);
-            System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()));
-        }
+        IntStream.range(0, wiseSayingList.size())
+                .map(i -> wiseSayingList.size() - 1 - i)
+                .mapToObj(wiseSayingList::get)
+                .forEach(
+                        wiseSaying -> System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()))
+                );
     }
 
     void actionDelete(String cmd) {
@@ -99,19 +109,23 @@ public class App {
     }
 
     WiseSaying findById(int id) {
-        WiseSaying wiseSaying = null;
-        for (int i = 0; i < wiseSayingList.size(); i++) {
-            if (wiseSayingList.get(i).getId() == id) {
-                wiseSaying = wiseSayingList.get(i);
-            }
-        }
 
-        if (wiseSaying == null) {
-            System.out.println("해당 아이디는 존재하지 않습니다.");
-            return null;
-        }
-
-        return wiseSaying;
+//        for (int i = 0; i < wiseSayingList.size(); i++) {
+//            if (wiseSayingList.get(i).getId() == id) {
+//                wiseSaying = wiseSayingList.get(i);
+//            }
+//        }
+//
+//        if (wiseSaying == null) {
+//            System.out.println("해당 아이디는 존재하지 않습니다.");
+//            return null;
+//        }
+//
+//        return wiseSaying;
+        return wiseSayingList.stream()
+                .filter(ws->ws.getId()==id)
+                .findFirst()
+                .orElse(null);
     }
 
     int CmdSpiltId(String cmd) {
