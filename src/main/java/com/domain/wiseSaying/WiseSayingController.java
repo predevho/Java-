@@ -3,20 +3,18 @@ package com.domain.wiseSaying;
 import com.Rq;
 import com.WiseSaying;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class WiseSayingController {
-    private final List<WiseSaying> wiseSayingList = new ArrayList<>();
-    private int lastId = 0;
     private final Scanner scanner;
+    private final WiseSayingService wiseSayingService;
 
-    public  WiseSayingController(Scanner scanner) {
+    public WiseSayingController(Scanner scanner) {
         this.scanner = scanner;
+        this.wiseSayingService = new WiseSayingService();
     }
-
 
     public void actionWrite() {
         System.out.print("명언: ");
@@ -25,20 +23,15 @@ public class WiseSayingController {
         System.out.print("작가: ");
         String author = scanner.nextLine().trim();
 
-        WiseSaying wiseSaying = write(author, content);
+        WiseSaying wiseSaying = wiseSayingService.write(author, content);
 
         System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
     }
 
-    WiseSaying write(String author, String content) {
-        WiseSaying wiseSaying = new WiseSaying(++lastId, author, content);
-
-        wiseSayingList.add(wiseSaying);
-
-        return wiseSaying;
-    }
 
     public void actionList() {
+        List<WiseSaying> wiseSayingList = wiseSayingService.getWiseSayingList();
+
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
@@ -54,7 +47,7 @@ public class WiseSayingController {
 
         int id = rq.getParamAsInt("id", -1);
 
-        WiseSaying wiseSaying = findById(id);
+        WiseSaying wiseSaying = wiseSayingService.findById(id);
 
         if (id == -1) {
             System.out.println("숫자를 입력해주세요.");
@@ -65,14 +58,11 @@ public class WiseSayingController {
             return;
         }
 
-        delete(wiseSaying);
+        wiseSayingService.delete(wiseSaying);
 
         System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
     }
 
-    public void delete(WiseSaying wiseSaying) {
-        wiseSayingList.remove(wiseSaying);
-    }
 
     public void actionModify(Rq rq) {
         int id = rq.getParamAsInt("id", -1);
@@ -82,7 +72,7 @@ public class WiseSayingController {
             return;
         }
 
-        WiseSaying wiseSaying = findById(id);
+        WiseSaying wiseSaying = wiseSayingService.findById(id);
 
         if (wiseSaying == null) {
             return;
@@ -96,24 +86,11 @@ public class WiseSayingController {
         System.out.print("작가 : ");
         String author = scanner.nextLine().trim();
 
-        modify(wiseSaying, content, author);
+        wiseSayingService.modify(wiseSaying, content, author);
 
         System.out.println("%d번 명언이 수정 되었습니다.".formatted(id));
     }
 
-    void modify(WiseSaying wiseSaying, String content, String author) {
-        wiseSaying.setContent(content);
-        wiseSaying.setAuthor(author);
-    }
-
-    WiseSaying findById(int id) {
-        return wiseSayingList.stream()
-                .filter(ws -> ws.getId() == id)
-                .findFirst()
-                .orElseGet(() -> {
-                    System.out.println("해당 아이디는 존재하지 않습니다.");
-                    return null;
-                });
-    }
-
 }
+
+
