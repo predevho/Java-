@@ -1,7 +1,6 @@
 package com.domain.wiseSaying;
 
 import com.Rq;
-import com.WiseSaying;
 
 import java.util.List;
 import java.util.Scanner;
@@ -32,14 +31,14 @@ public class WiseSayingController {
     public void actionList() {
         List<WiseSaying> wiseSayingList = wiseSayingService.getWiseSayingList();
 
-        System.out.println("번호 / 작가 / 명언");
+        System.out.println("번호 / 작가 / 명언 / 작성 / 수정");
         System.out.println("----------------------");
 
         IntStream.range(0, wiseSayingList.size())
                 .map(i -> wiseSayingList.size() - 1 - i)
                 .mapToObj(wiseSayingList::get)
                 .forEach(
-                        wiseSaying -> System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()))
+                        wiseSaying -> System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent(), wiseSaying.getCreatedDate(), wiseSaying.getModifiedDate()))
                 );
     }
 
