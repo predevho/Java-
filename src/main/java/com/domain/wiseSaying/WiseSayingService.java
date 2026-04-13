@@ -2,40 +2,34 @@ package com.domain.wiseSaying;
 
 import com.WiseSaying;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WiseSayingService {
-    private final List<WiseSaying> wiseSayingList = new ArrayList<>();
-    private int lastId = 0;
+    private final WiseSayingRepository wiseSayingRepository;
+
+    WiseSayingService() {
+        this.wiseSayingRepository = new WiseSayingRepository();
+    }
 
     public List<WiseSaying> getWiseSayingList() {
-        return wiseSayingList;
+        return this.wiseSayingRepository.getWiseSayingList();
     }
 
     public void delete(WiseSaying wiseSaying) {
-        wiseSayingList.remove(wiseSaying);
+        this.wiseSayingRepository.delete(wiseSaying);
     }
 
-    void modify(WiseSaying wiseSaying, String author, String content) {
-        wiseSaying.setContent(content);
-        wiseSaying.setAuthor(author);
+    public void modify(WiseSaying wiseSaying, String author, String content) {
+        this.wiseSayingRepository.modify(wiseSaying, author, content);
     }
 
     WiseSaying findById(int id) {
-        return wiseSayingList.stream()
-                .filter(ws -> ws.getId() == id)
-                .findFirst()
-                .orElseGet(() -> {
-                    System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
-                    return null;
-                });
+        return this.wiseSayingRepository.findById(id);
     }
 
     public WiseSaying write(String author, String content) {
-        WiseSaying wiseSaying = new WiseSaying(++lastId, content, author);
 
-        wiseSayingList.add(wiseSaying);
+        WiseSaying wiseSaying = this.wiseSayingRepository.write(author, content);
 
         return wiseSaying;
 
