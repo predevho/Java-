@@ -1,5 +1,7 @@
 package com;
 
+import com.domain.system.SystemController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +13,7 @@ public class App {
     private int lastId = 0;
 
     void run() {
+        SystemController systemController = new SystemController();
         System.out.println("== 명언 앱 ==");
 
         while (true) {
@@ -21,7 +24,7 @@ public class App {
 
             switch (rq.getActionName()) {
                 case "종료" -> {
-                    System.out.println("프로그램을 종료합니다.");
+                    systemController.actionExit();
                     return;
                 }
                 case "등록" -> actionWrite();
