@@ -31,6 +31,8 @@ public class WiseSayingController {
     public void actionList() {
         List<WiseSaying> wiseSayingList = wiseSayingService.getWiseSayingList();
 
+
+
         System.out.println("번호 / 작가 / 명언 / 작성 / 수정");
         System.out.println("----------------------");
 
@@ -38,7 +40,14 @@ public class WiseSayingController {
                 .map(i -> wiseSayingList.size() - 1 - i)
                 .mapToObj(wiseSayingList::get)
                 .forEach(
-                        wiseSaying -> System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent(), wiseSaying.getCreatedDate(), wiseSaying.getModifiedDate()))
+                        wiseSaying -> System.out.println("%d / %s / %s / %s / %s".
+                                formatted(
+                                        wiseSaying.getId(),
+                                        wiseSaying.getAuthor(),
+                                        wiseSaying.getContent(),
+                                        wiseSaying.getCreatedDate(),
+                                        wiseSaying.getModifiedDate()
+                                ))
                 );
     }
 

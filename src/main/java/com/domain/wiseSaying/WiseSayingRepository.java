@@ -17,28 +17,39 @@ public class WiseSayingRepository {
         wiseSayingList.remove(wiseSaying);
     }
 
-    void modify(WiseSaying wiseSaying, String author, String content) {
-        wiseSaying.setContent(content);
-        wiseSaying.setAuthor(author);
-        wiseSaying.setModifiedDate(LocalDateTime.now());
+//    void modify(WiseSaying wiseSaying, String author, String content) {
+//        wiseSaying.setContent(content);
+//        wiseSaying.setAuthor(author);
+//        wiseSaying.setModifiedDate(LocalDateTime.now());
+//    }
+//
+//    public WiseSaying write(String author, String content) {
+//        WiseSaying wiseSaying = new WiseSaying(++lastId, content, author);
+//
+//        wiseSayingList.add(wiseSaying);
+//
+//        return wiseSaying;
+//
+//    }
+
+    public WiseSaying save(WiseSaying wiseSaying) {
+        if (wiseSaying.isNew()) {
+            wiseSaying.setId(++lastId);
+            wiseSayingList.add(wiseSaying);
+        } else {
+            wiseSaying.setModifiedDate(LocalDateTime.now());
+        }
+        return wiseSaying;
+
     }
 
     WiseSaying findById(int id) {
         return wiseSayingList.stream()
-                .filter(ws -> ws.getId() == id)
-                .findFirst()
-                .orElseGet(() -> {
-                    System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
-                    return null;
-                });
-    }
-
-    public WiseSaying write(String author, String content) {
-        WiseSaying wiseSaying = new WiseSaying(++lastId, content, author);
-
-        wiseSayingList.add(wiseSaying);
-
-        return wiseSaying;
-
+            .filter(ws -> ws.getId() == id)
+            .findFirst()
+            .orElseGet(() -> {
+                System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+                return null;
+            });
     }
 }

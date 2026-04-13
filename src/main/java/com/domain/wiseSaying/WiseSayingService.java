@@ -18,7 +18,9 @@ public class WiseSayingService {
     }
 
     public void modify(WiseSaying wiseSaying, String author, String content) {
-        this.wiseSayingRepository.modify(wiseSaying, author, content);
+        wiseSaying.setContent(content);
+        wiseSaying.setAuthor(author);
+        wiseSayingRepository.save(wiseSaying);
     }
 
     WiseSaying findById(int id) {
@@ -26,8 +28,9 @@ public class WiseSayingService {
     }
 
     public WiseSaying write(String author, String content) {
+        WiseSaying wiseSaying = new WiseSaying(content, author);
 
-        WiseSaying wiseSaying = this.wiseSayingRepository.write(author, content);
+        wiseSayingRepository.save(wiseSaying);
 
         return wiseSaying;
 
